@@ -51,7 +51,7 @@ function App() {
     secondSubsequense: ''
   }})
 
-  const clearButton = (sequenseName: string) => {
+  const clearButton = (sequenseName: keyof FormValues) => {
     if (watch(sequenseName)) {
       return (
         <CloseButton
