@@ -1,54 +1,39 @@
-# React + TypeScript + Vite
+# Amino Acid Sequence Alignment Visualizer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![React](https://img.shields.io/badge/React-19.1.0-blue?logo=react)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8.3-blue?logo=typescript)
+[![Chakra UI](https://img.shields.io/badge/Chakra_UI-3.2.0-319795?logo=chakraui)](https://chakra-ui.com)
+[![React Hook Form](https://img.shields.io/badge/React_Hook_Form-7.57.0-ec5990)](https://react-hook-form.com)
 
-Currently, two official plugins are available:
+A modern React-based visualization tool for analyzing and comparing amino acid sequence alignments with intuitive controls and responsive design.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Demo
 
-## Expanding the ESLint configuration
+[GitHub Pages](https://yegorsid.github.io/subsequences)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Installation
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. Clone the repository
+2. Install dependencies:
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+    ``
+  npm install
+  ``
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+3. Start the development server:
+   
+   ``
+   npm run dev
+   ``
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+4. Open your browser at http://localhost:5173/
+
+
+## Technologies Used
+
+- **[React 18](https://react.dev)** - Core library for building user interfaces with component-based architecture
+- **[TypeScript](https://www.typescriptlang.org)** - Adds static typing to JavaScript for improved developer experience
+- **[Chakra UI](https://chakra-ui.com)** - Accessible component library for consistent styling and theming
+- **[React Hook Form](https://react-hook-form.com)** - Performant form management with minimal re-renders
+- **[normalize.css](https://necolas.github.io/normalize.css/)** - Modern CSS reset for cross-browser consistency
+- **[throttle-debounce](https://www.npmjs.com/package/throttle-debounce)** - Optimizes event handling for scroll/resize interactions
