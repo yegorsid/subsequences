@@ -1,5 +1,5 @@
 import { Box, Button, CloseButton, Field, Flex, Input, InputGroup, Separator, Text } from '@chakra-ui/react'
-import { useRef, useState, type JSX } from 'react';
+import { useRef, useState} from 'react';
 import { Controller, useForm } from 'react-hook-form'
 import Header from './components/Header';
 
@@ -30,12 +30,12 @@ const COLOR_MAP: Record<string, string> = {
   'H': '#80BFFF',
   'Q': '#80BFFF',
   'N': '#80BFFF',
-  '-': 'none'
+  '-': 'transparent'
 };
 
 function App() {
-  const [coloredFirstSequence, setColoredFirstSequence] = useState<JSX.Element[] | null>(null);
-  const [coloredSecondSequence, setColoredSecondSequence] = useState<JSX.Element[] | null>(null);
+  const [firstSequence, setFirstSequence] = useState('');
+  const [secondSequence, setSecondSequence] = useState('');
   const firstInputRef = useRef<HTMLInputElement | null>(null);
   const secondInputRef = useRef<HTMLInputElement | null>(null);
   const {
@@ -88,68 +88,12 @@ function App() {
         type: 'manual',
         message: 'All sequences must be of the same length'
       });
-
-      return
+      return;
     }
 
-    if (data.firstSubsequense) {
-      const coloredFirstSymbols = data.firstSubsequense.split('').map((symbol, index) => (
-        <Box
-          key={index}
-          padding={0}
-          margin={0}
-          fontSize={{ base: "sm", md: "md" }}
-          height={{ base: "42px", md: "48px" }}
-          minW="15px"
-          textAlign="center"
-        >
-          <Text bg={COLOR_MAP[symbol]} lineHeight="1">
-            {symbol}
-          </Text>
-        </Box>
-      ))
-
-      setColoredFirstSequence(coloredFirstSymbols);
-
-      const coloredSecondSymbols = data.secondSubsequense.split('').map((symbol, index) => {
-        if (symbol === data.firstSubsequense[index]) {
-          return (
-          <Box
-            key={index}
-            padding={0}
-            margin={0}
-            fontSize={{ base: "sm", md: "md" }}
-            height={{ base: "42px", md: "48px" }}
-            minW="15px"
-            textAlign="center"
-          >
-            <Text lineHeight="1">
-              {symbol}
-            </Text>
-          </Box>
-          )
-        } else {
-          return (
-          <Box
-            key={index}
-            padding={0}
-            margin={0}
-            fontSize={{ base: "sm", md: "md" }}
-            height={{ base: "42px", md: "48px" }}
-            minW="15px"
-            textAlign="center"
-          >
-            <Text bg={COLOR_MAP[symbol]} lineHeight="1">
-              {symbol}
-            </Text>
-          </Box>
-          )
-        }
-      })
-
-      setColoredSecondSequence(coloredSecondSymbols)
-    }
-  })
+    setFirstSequence(data.firstSubsequense);
+    setSecondSequence(data.secondSubsequense);
+  });
   
   return (
     <>
@@ -250,15 +194,46 @@ function App() {
       </form>
       
       <Box position={'relative'}>
-        {coloredFirstSequence && (
+        {firstSequence && (
           <Flex mt={{ base: 2, md: 4 }} overflow="auto" wrap="wrap" gap="1px" fontFamily={'monospace'}>
-            {coloredFirstSequence}
+            {firstSequence.split('').map((symbol, index) => (
+              <Box
+              key={index}
+              padding={0}
+              margin={0}
+              fontSize={{ base: "sm", md: "md" }}
+              height={{ base: "42px", md: "48px" }}
+              minW="15px"
+              textAlign="center"
+              >
+                <Text bg={COLOR_MAP[symbol]} lineHeight="1">
+                  {symbol}
+                </Text>
+              </Box>
+            ))}
           </Flex>
         )}
         
-        {coloredSecondSequence && (
+        {secondSequence && (
           <Flex overflow="auto" wrap="wrap" gap="1px" fontFamily={'monospace'} position={'absolute'} top={{ base: "14px", md: "16px" }}>
-            {coloredSecondSequence}
+            {secondSequence.split('').map((symbol, index) => {
+              const shouldBeColored = symbol !== firstSequence[index];
+              return (
+                <Box
+                key={index}
+                padding={0}
+                margin={0}
+                fontSize={{ base: "sm", md: "md" }}
+                height={{ base: "42px", md: "48px" }}
+                minW="15px"
+                textAlign="center"
+              >
+                <Text bg={shouldBeColored ? COLOR_MAP[symbol] : 'transparent'} lineHeight="1">
+                  {symbol}
+                </Text>
+              </Box>
+              )
+            })}
           </Flex>
         )}
       </Box>
