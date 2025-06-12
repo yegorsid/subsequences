@@ -1,7 +1,9 @@
 import { Box, Button, CloseButton, Field, Flex, Input, InputGroup, Separator, Text } from '@chakra-ui/react'
-import { useRef, useState} from 'react';
+import { useEffect, useRef, useState} from 'react';
 import { Controller, useForm } from 'react-hook-form'
 import Header from './components/Header';
+import { Toaster, toaster } from './components/ui/toaster';
+import { debounce } from 'throttle-debounce';
 
 interface FormValues {
   firstSubsequense: string
@@ -95,6 +97,23 @@ function App() {
     setSecondSequence(data.secondSubsequense);
   });
   
+  useEffect(() => {
+    const handleTextSelection = debounce(800, () => {
+      const selectedText = window.getSelection()?.toString();
+
+      if (!selectedText || selectedText === '') return
+      navigator.clipboard.writeText(selectedText)
+      .then(() => toaster.success({
+        description: "Copied to clipboard",
+        duration: 1000
+      }))
+    })
+    
+    document.addEventListener('selectionchange', handleTextSelection);
+
+    return document.addEventListener('selectionchange', handleTextSelection);
+  }, [])
+
   return (
     <>
     <Header />
@@ -195,48 +214,53 @@ function App() {
       
       <Box position={'relative'}>
         {firstSequence && (
-          <Flex mt={{ base: 2, md: 4 }} overflow="auto" wrap="wrap" gap="1px" fontFamily={'monospace'}>
+          <Flex mt={{ base: 2, md: 4 }} fontFamily={'monospace'} height={{ base: "14px", md: "16px" }} letterSpacing={2} wrap={'wrap'} rowGap={{ base: "28px", md: "32px" }}>
             {firstSequence.split('').map((symbol, index) => (
               <Box
-              key={index}
-              padding={0}
-              margin={0}
-              fontSize={{ base: "sm", md: "md" }}
-              height={{ base: "42px", md: "48px" }}
-              minW="15px"
-              textAlign="center"
+                display={'inline-block'}
+                key={index}
+                padding={'0 2px'}
+                margin={0}
+                fontSize={{ base: "sm", md: "md" }}
+                textAlign="center"
+                as={'span'}
+                bg={COLOR_MAP[symbol]}
+                lineHeight={{ base: "14px", md: "16px" }}
+                border={0}
+                w={{ base: "14px", md: "16px" }}
               >
-                <Text bg={COLOR_MAP[symbol]} lineHeight="1">
-                  {symbol}
-                </Text>
+                {symbol}
               </Box>
             ))}
           </Flex>
         )}
         
         {secondSequence && (
-          <Flex overflow="auto" wrap="wrap" gap="1px" fontFamily={'monospace'} position={'absolute'} top={{ base: "14px", md: "16px" }}>
+          <Flex fontFamily={'monospace'} position={'absolute'} top={{ base: "14px", md: "16px" }} height={{ base: "14px", md: "16px" }} w={'100%'} letterSpacing={2} wrap={'wrap'} rowGap={{ base: "28px", md: "32px" }}>
             {secondSequence.split('').map((symbol, index) => {
               const shouldBeColored = symbol !== firstSequence[index];
               return (
                 <Box
+                display={'inline-block'}
                 key={index}
-                padding={0}
+                padding={'0 2px'}
                 margin={0}
                 fontSize={{ base: "sm", md: "md" }}
-                height={{ base: "42px", md: "48px" }}
-                minW="15px"
                 textAlign="center"
+                bg={shouldBeColored ? COLOR_MAP[symbol] : 'transparent'} 
+                lineHeight={{ base: "14px", md: "16px" }}
+                as={'span'}
+                border={0}
+                w={{ base: "14px", md: "16px" }}
               >
-                <Text bg={shouldBeColored ? COLOR_MAP[symbol] : 'transparent'} lineHeight="1">
-                  {symbol}
-                </Text>
+                {symbol}
               </Box>
               )
             })}
           </Flex>
         )}
       </Box>
+      <Toaster />
     </Box>
     </>
   )
