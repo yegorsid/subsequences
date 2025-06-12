@@ -96,15 +96,16 @@ function App() {
       const coloredFirstSymbols = data.firstSubsequense.split('').map((symbol, index) => (
         <Box
           key={index}
-          bg={COLOR_MAP[symbol]}
           padding={0}
           margin={0}
           fontSize={{ base: "sm", md: "md" }}
-          lineHeight="1.2"
+          height={{ base: "42px", md: "48px" }}
           minW="15px"
           textAlign="center"
         >
-          {symbol}
+          <Text bg={COLOR_MAP[symbol]} lineHeight="1">
+            {symbol}
+          </Text>
         </Box>
       ))
 
@@ -118,26 +119,29 @@ function App() {
             padding={0}
             margin={0}
             fontSize={{ base: "sm", md: "md" }}
-            lineHeight="1.2"
+            height={{ base: "42px", md: "48px" }}
             minW="15px"
             textAlign="center"
           >
-            {symbol}
+            <Text lineHeight="1">
+              {symbol}
+            </Text>
           </Box>
           )
         } else {
           return (
           <Box
             key={index}
-            bg={COLOR_MAP[symbol]}
             padding={0}
             margin={0}
             fontSize={{ base: "sm", md: "md" }}
-            lineHeight="1.2"
+            height={{ base: "42px", md: "48px" }}
             minW="15px"
             textAlign="center"
           >
-            {symbol}
+            <Text bg={COLOR_MAP[symbol]} lineHeight="1">
+              {symbol}
+            </Text>
           </Box>
           )
         }
@@ -245,21 +249,19 @@ function App() {
         </Flex>
       </form>
       
-      {coloredFirstSequence && (
-        <Box mt={{ base: 2, md: 4 }} overflowX="auto">
-          <Flex wrap="wrap" gap="1px" fontFamily={'monospace'}>
+      <Box position={'relative'}>
+        {coloredFirstSequence && (
+          <Flex mt={{ base: 2, md: 4 }} overflow="auto" wrap="wrap" gap="1px" fontFamily={'monospace'}>
             {coloredFirstSequence}
           </Flex>
-        </Box>
-      )}
-      
-      {coloredSecondSequence && (
-        <Box mt={{ base: 2, md: 4 }} overflowX="auto">
-          <Flex wrap="wrap" gap="1px" fontFamily={'monospace'}>
+        )}
+        
+        {coloredSecondSequence && (
+          <Flex overflow="auto" wrap="wrap" gap="1px" fontFamily={'monospace'} position={'absolute'} top={{ base: "14px", md: "16px" }}>
             {coloredSecondSequence}
           </Flex>
-        </Box>
-      )}
+        )}
+      </Box>
     </Box>
     </>
   )
