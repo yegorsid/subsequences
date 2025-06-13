@@ -1,5 +1,5 @@
 import { Box, Button, CloseButton, Field, Flex, Input, InputGroup, Separator, Text } from '@chakra-ui/react'
-import { useEffect, useRef, useState} from 'react';
+import { useCallback, useEffect, useRef, useState} from 'react';
 import { Controller, useForm } from 'react-hook-form'
 import Header from './components/Header';
 import { Toaster, toaster } from './components/ui/toaster';
@@ -40,6 +40,7 @@ function App() {
   const [secondSequence, setSecondSequence] = useState('');
   const firstInputRef = useRef<HTMLInputElement | null>(null);
   const secondInputRef = useRef<HTMLInputElement | null>(null);
+  const containerRef = useRef<HTMLInputElement | null>(null);
   const {
     control,
     watch,
@@ -96,23 +97,36 @@ function App() {
     setFirstSequence(data.firstSubsequense);
     setSecondSequence(data.secondSubsequense);
   });
+
+  const handleTextSelection = useCallback(() => {
+    const selection = window.getSelection();
+    if (!selection || selection.toString() === '') return;
+    
+    if (
+      containerRef.current &&
+      containerRef.current.contains(selection.anchorNode) &&
+      containerRef.current.contains(selection.focusNode)
+    ) {
+      navigator.clipboard.writeText(selection.toString())
+        .then(() => toaster.success({
+          description: "Copied to clipboard",
+          duration: 1000
+        }))
+        .catch(err => console.error('Copy failed:', err));
+    }
+  }, []);
   
   useEffect(() => {
-    const handleTextSelection = debounce(800, () => {
-      const selectedText = window.getSelection()?.toString();
-
-      if (!selectedText || selectedText === '') return
-      navigator.clipboard.writeText(selectedText)
-      .then(() => toaster.success({
-        description: "Copied to clipboard",
-        duration: 1000
-      }))
-    })
+    const container = containerRef.current;
+    if (!container) return;
     
-    document.addEventListener('selectionchange', handleTextSelection);
-
-    return document.addEventListener('selectionchange', handleTextSelection);
-  }, [])
+    const debouncedHandler = debounce(800, handleTextSelection);
+    container.addEventListener('mouseup', debouncedHandler);
+    
+    return () => {
+      container.removeEventListener('mouseup', debouncedHandler);
+    };
+  }, [handleTextSelection]);
 
   return (
     <>
@@ -212,7 +226,7 @@ function App() {
         </Flex>
       </form>
       
-      <Box position={'relative'}>
+      <Box position={'relative'} ref={containerRef}>
         {firstSequence && (
           <Flex mt={{ base: 2, md: 4 }} fontFamily={'monospace'} height={{ base: "14px", md: "16px" }} letterSpacing={2} wrap={'wrap'} rowGap={{ base: "28px", md: "32px" }}>
             {firstSequence.split('').map((symbol, index) => (
