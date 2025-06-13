@@ -227,15 +227,15 @@ function App() {
         </Flex>
       </form>
       
-      <Box position={'relative'} ref={containerRef}>
+      <Box ref={containerRef}>
         {firstSequence && (
           <Flex mt={{ base: 2, md: 4 }} fontFamily={'monospace'} height={{ base: "14px", md: "16px" }} letterSpacing={2} wrap={'wrap'} rowGap={{ base: "28px", md: "32px" }}>
             {firstSequence.split('').map((symbol, index) => (
               <Box
                 display={'inline-block'}
                 key={`first-${index}`}
-                padding={'0 2px'}
-                margin={0}
+                p={0}
+                m={0}
                 fontSize={{ base: "sm", md: "md" }}
                 textAlign="center"
                 as={'span'}
@@ -251,15 +251,15 @@ function App() {
         )}
         
         {secondSequence && (
-          <Flex fontFamily={'monospace'} position={'absolute'} top={{ base: "14px", md: "16px" }} height={{ base: "14px", md: "16px" }} w={'100%'} letterSpacing={2} wrap={'wrap'} rowGap={{ base: "28px", md: "32px" }}>
+          <Flex fontFamily={'monospace'} height={{ base: "14px", md: "16px" }} w={'100%'} letterSpacing={2} wrap={'wrap'} rowGap={{ base: "28px", md: "32px" }}>
             {secondSequence.split('').map((symbol, index) => {
               const shouldBeColored = symbol !== firstSequence[index];
               return (
                 <Box
                   display={'inline-block'}
                   key={`second-${index}`}
-                  padding={'0 2px'}
-                  margin={0}
+                  p={0}
+                  m={0}
                   fontSize={{ base: "sm", md: "md" }}
                   textAlign="center"
                   bg={shouldBeColored ? COLOR_MAP[symbol] : 'transparent'} 
