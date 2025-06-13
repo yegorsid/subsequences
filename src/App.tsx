@@ -10,7 +10,6 @@ interface FormValues {
   secondSubsequense: string
 }
 
-const ALLOWED_SYMBOLS = "ARNDCEQGHILKMFPSTWYV-";
 const COLOR_MAP: Record<string, string> = {
   'C': '#FFEA00',
   'A': '#67E4A6',
@@ -34,6 +33,8 @@ const COLOR_MAP: Record<string, string> = {
   'N': '#80BFFF',
   '-': 'transparent'
 };
+
+const ALLOWED_SYMBOLS = Object.keys(COLOR_MAP)
 
 function App() {
   const [firstSequence, setFirstSequence] = useState('');
