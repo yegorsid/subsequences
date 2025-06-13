@@ -218,7 +218,7 @@ function App() {
             {firstSequence.split('').map((symbol, index) => (
               <Box
                 display={'inline-block'}
-                key={index}
+                key={`first-${index}`}
                 padding={'0 2px'}
                 margin={0}
                 fontSize={{ base: "sm", md: "md" }}
@@ -241,18 +241,18 @@ function App() {
               const shouldBeColored = symbol !== firstSequence[index];
               return (
                 <Box
-                display={'inline-block'}
-                key={index}
-                padding={'0 2px'}
-                margin={0}
-                fontSize={{ base: "sm", md: "md" }}
-                textAlign="center"
-                bg={shouldBeColored ? COLOR_MAP[symbol] : 'transparent'} 
-                lineHeight={{ base: "14px", md: "16px" }}
-                as={'span'}
-                border={0}
-                w={{ base: "14px", md: "16px" }}
-              >
+                  display={'inline-block'}
+                  key={`second-${index}`}
+                  padding={'0 2px'}
+                  margin={0}
+                  fontSize={{ base: "sm", md: "md" }}
+                  textAlign="center"
+                  bg={shouldBeColored ? COLOR_MAP[symbol] : 'transparent'} 
+                  lineHeight={{ base: "14px", md: "16px" }}
+                  as={'span'}
+                  border={0}
+                  w={{ base: "14px", md: "16px" }}
+                >
                 {symbol}
               </Box>
               )
