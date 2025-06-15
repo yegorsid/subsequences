@@ -34,14 +34,14 @@ const COLOR_MAP: Record<string, string> = {
   '-': 'transparent'
 };
 
-const ALLOWED_SYMBOLS = Object.keys(COLOR_MAP)
+const ALLOWED_SYMBOLS = Object.keys(COLOR_MAP);
 
 function App() {
   const [firstSequence, setFirstSequence] = useState('');
   const [secondSequence, setSecondSequence] = useState('');
   const firstInputRef = useRef<HTMLInputElement | null>(null);
   const secondInputRef = useRef<HTMLInputElement | null>(null);
-  const containerRef = useRef<HTMLInputElement | null>(null);
+  const containerRef = useRef<HTMLElement | null>(null);
   const {
     control,
     watch,
@@ -229,10 +229,9 @@ function App() {
       
       <Box ref={containerRef}>
         {firstSequence && (
-          <Flex mt={{ base: 2, md: 4 }} fontFamily={'monospace'} height={{ base: "14px", md: "16px" }} letterSpacing={2} wrap={'wrap'} rowGap={{ base: "28px", md: "32px" }}>
+          <Box fontFamily={'monospace'} height={{ base: "17px", md: "19px" }} letterSpacing={2} lineHeight={{ base: "42px", md: "48px" }}>
             {firstSequence.split('').map((symbol, index) => (
               <Box
-                display={'inline-block'}
                 key={`first-${index}`}
                 p={0}
                 m={0}
@@ -243,20 +242,20 @@ function App() {
                 lineHeight={{ base: "14px", md: "16px" }}
                 border={0}
                 w={{ base: "14px", md: "16px" }}
+                pl={'2px'}
               >
                 {symbol}
               </Box>
             ))}
-          </Flex>
+          </Box>
         )}
         
         {secondSequence && (
-          <Flex fontFamily={'monospace'} height={{ base: "14px", md: "16px" }} w={'100%'} letterSpacing={2} wrap={'wrap'} rowGap={{ base: "28px", md: "32px" }}>
+          <Box fontFamily={'monospace'} height={{ base: "17px", md: "19px" }} w={'100%'} letterSpacing={2} lineHeight={{ base: "42px", md: "48px" }}>
             {secondSequence.split('').map((symbol, index) => {
               const shouldBeColored = symbol !== firstSequence[index];
               return (
                 <Box
-                  display={'inline-block'}
                   key={`second-${index}`}
                   p={0}
                   m={0}
@@ -267,12 +266,13 @@ function App() {
                   as={'span'}
                   border={0}
                   w={{ base: "14px", md: "16px" }}
+                  pl={'2px'}
                 >
                 {symbol}
               </Box>
               )
             })}
-          </Flex>
+          </Box>
         )}
       </Box>
       <Toaster />
