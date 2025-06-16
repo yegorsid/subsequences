@@ -76,14 +76,6 @@ function App() {
     return undefined
   }
 
-  const validateAminoAcidInput = (value: string) => {
-    return value
-      .toUpperCase()
-      .split('')
-      .every(char => ALLOWED_SYMBOLS.includes(char)) 
-      || "Only amino acid symbols are allowed";
-  };
-
   const onSubmit = handleSubmit((data) => {
     clearErrors('root.lengthError');
 
@@ -108,7 +100,7 @@ function App() {
       containerRef.current.contains(selection.anchorNode) &&
       containerRef.current.contains(selection.focusNode)
     ) {
-      navigator.clipboard.writeText(selection.toString())
+      navigator.clipboard.writeText(selection.toString().replace(/\s/g, ''))
         .then(() => toaster.success({
           description: "Copied to clipboard",
           duration: 1000
@@ -147,7 +139,6 @@ function App() {
             <Controller
               name="firstSubsequense"
               control={control}
-              // rules={{ validate: validateAminoAcidInput }}
               render={({ field }) => (
                 <InputGroup endElement={clearButton('firstSubsequense')}>
                   <Input
@@ -181,7 +172,6 @@ function App() {
             <Controller
                 name="secondSubsequense"
                 control={control}
-                // rules={{ validate: validateAminoAcidInput }}
                 render={({ field }) => (
                   <InputGroup endElement={clearButton('secondSubsequense')}>
                     <Input
