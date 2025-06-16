@@ -147,7 +147,7 @@ function App() {
             <Controller
               name="firstSubsequense"
               control={control}
-              rules={{ validate: validateAminoAcidInput }}
+              // rules={{ validate: validateAminoAcidInput }}
               render={({ field }) => (
                 <InputGroup endElement={clearButton('firstSubsequense')}>
                   <Input
@@ -181,7 +181,7 @@ function App() {
             <Controller
                 name="secondSubsequense"
                 control={control}
-                rules={{ validate: validateAminoAcidInput }}
+                // rules={{ validate: validateAminoAcidInput }}
                 render={({ field }) => (
                   <InputGroup endElement={clearButton('secondSubsequense')}>
                     <Input
